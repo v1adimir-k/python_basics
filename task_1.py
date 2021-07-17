@@ -68,11 +68,11 @@ if random_choice == 1:  # нормальный вариант
     number_by_digits.sort(reverse=True)
     biggest_digit = number_by_digits[0]
 else:  # вариант с цикллом while и арифметическими операциями...
-    i = 0
+    i = 1
     biggest_digit = number[0]
-    while i < len(number) - 1:
-        if int(number[i+1]) - int(number[i]) > 0:
-            biggest_digit = number[i+1]
+    while i < len(number):
+        if biggest_digit < number[i]:
+            biggest_digit = number[i]
         i += 1
 
 print('Наибольшая цифра:', biggest_digit)
