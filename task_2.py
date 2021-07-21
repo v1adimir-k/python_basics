@@ -28,17 +28,20 @@ input()
 print('Часть №2')
 print('='*(shutil.get_terminal_size()[0]-1))
 
-print('Введите элементы списка через пробел:')
-list_1 = input('>>> ').split()
+while True:
+    print('Введите элементы списка через пробел:')
+    list_1 = input('>>> ').split()
 
-i = 1
-while i < len(list_1):
-    list_1[i - 1], list_1[i] = list_1[i], list_1[i - 1]
-    i += 2
-print('\nИзмененный список:\n', list_1, sep='')
+    i = 1
+    while i < len(list_1):
+        list_1[i - 1], list_1[i] = list_1[i], list_1[i - 1]
+        i += 2
+    print('\nИзмененный список:\n', list_1, sep='')
 
-print('\nНажмите любую клавишу, чтобы продолжить ...')
-input()
+    print('\nНажмите Enter, чтобы продолжить, или введите "+", чтобы повторить часть №2')
+    if not input():
+        break
+    print()
 
 # Часть 3
 # =================================================================================================
@@ -49,24 +52,33 @@ input()
 print('Часть №3')
 print('='*(shutil.get_terminal_size()[0]-1))
 
-month = int(input('Введите номер месяца: '))
-random_choice = randint(0, 1)
-if random_choice == 1:
-    my_list = [['зима', (12, 1, 2)], ['весна', (3, 4, 5)],
-               ['лето', (6, 7, 8)], ['осень',  (9, 10, 11)]]
-    for i in range(len(my_list)):
-        if month in my_list[i][1]:
-            print(f'Это {my_list[i][0][:-1]}ний месяц')
-            break
-else:
-    my_dict = {'зима': (12, 1, 2), 'весна': (3, 4, 5), 'лето': (6, 7, 8), 'осень': (9, 10, 11)}
-    for key, value in my_dict.items():
-        if month in value:
-            print(f'Это {key[:-1]}ний месяц')
-            break
+while True:
+    month = int(input('Введите номер месяца: '))
+    random_choice = randint(0, 1)
+    if random_choice == 1:
+        my_list = [['зима', (12, 1, 2)], ['весна', (3, 4, 5)],
+                   ['лето', (6, 7, 8)], ['осень',  (9, 10, 11)]]
+        for i in range(len(my_list)):
+            if month in my_list[i][1]:
+                print(f'Это {my_list[i][0][:-1]}ний месяц')
+                break
+            elif i == len(my_list) - 1:
+                print('Нету такого месяца')
+    else:
+        my_dict = {'зима': (12, 1, 2), 'весна': (3, 4, 5), 'лето': (6, 7, 8), 'осень': (9, 10, 11)}
+        ch = None
+        for key, value in my_dict.items():
+            if month in value:
+                print(f'Это {key[:-1]}ний месяц')
+                ch = 1
+                break
+        if ch is None:
+            print('Нету такого месяца')
 
-print('\nНажмите любую клавишу, чтобы продолжить ...')
-input()
+    print('\nНажмите Enter, чтобы продолжить, или введите "+", чтобы повторить часть №3')
+    if not input():
+        break
+    print()
 
 # Часть 4
 # =================================================================================================
@@ -78,12 +90,15 @@ input()
 print('Часть №4')
 print('='*(shutil.get_terminal_size()[0]-1))
 
-input_list = input('Введите слова: ').split()
-for i in range(len(input_list)):
-    print(f'{i+1}. {input_list[i][:10]}')
+while True:
+    input_list = input('Введите слова через пробел: ').split()
+    for i in range(len(input_list)):
+        print(f'{i+1}. {input_list[i][:10]}')
 
-print('\nНажмите любую клавишу, чтобы продолжить ...')
-input()
+    print('\nНажмите Enter, чтобы продолжить, или введите "+", чтобы повторить часть №4')
+    if not input():
+        break
+    print()
 
 # Часть 5
 # =================================================================================================
@@ -102,11 +117,17 @@ print('='*(shutil.get_terminal_size()[0]-1))
 
 rate_list = []
 while True:
-    print('Введите число, чтобы добавить его в рейтинг, или нажмите Enter, чтобы выйти')
+    print('Введите натуральное число, чтобы добавить его в рейтинг, '
+          'или нажмите Enter, чтобы выйти')
     number = input('>>> ')
     if number == '':
         print()
         break
+    elif number.isdigit() and number != '0':
+        number = int(number)
+    else:
+        print('\nПопробуйте снова...')
+        continue
     rate_list.append(int(number))
     rate_list.sort(reverse=True)
     print(f'Рейтинг: {str(rate_list)[1:-1]}\n')
@@ -138,38 +159,42 @@ while True:
 print('Часть №6')
 print('='*(shutil.get_terminal_size()[0]-1))
 
-print('Желаете задать параметры товаров, которые будут заноситься в базу данных? Введите "да", '
-      'чтобы задать параметры или "нет", чтобы использовать параметры по умолчанию:')
-set_choice = input('>>> ').replace('"', '')
-if set_choice == 'да':
-    print('\nВведите через запятую и пробел (, ) параметры товаров, '
-          'например: "название", "цена", "количество" и тп.')
-    parameters = input('>>> ').split(', ')
-else:
-    parameters = ['название', 'цена', 'количество', 'ед']
-
-products = []
 while True:
-    print('\nВведите "+", чтобы добавить информацию о товаре в базу данных, '
-          'или нажмиите Enter, чтобы завершить добавление товаров')
-    choice = input('>>> ')
-    if choice == '':
+    print('Желаете задать параметры товаров, которые будут заноситься в базу данных? Введите '
+          '"да", чтобы задать параметры или "нет", чтобы использовать параметры по умолчанию:')
+    set_choice = input('>>> ').replace('"', '')
+    if set_choice == 'да':
+        print('\nВведите через запятую и пробел ", " параметры товаров, '
+              'например: "название", "цена", "количество" и тп.')
+        parameters = input('>>> ').replace('"', '').split(', ')
+    else:
+        parameters = ['название', 'цена', 'количество', 'ед']
+
+    products = []
+    while True:
+        print('\nВведите "+", чтобы добавить информацию о товаре в базу данных, '
+              'или нажмиите Enter, чтобы завершить добавление товаров')
+        choice = input('>>> ')
+        if choice == '':
+            break
+        product = {}
+        for item in parameters:
+            value = input(f'{item}: ')
+            product[item] = int(value) if value.isdigit() else value
+        products.append(((len(products)+1), product))
+
+    product_analysis = {}
+    for parameter in parameters:
+        product_analysis.setdefault(parameter, [])
+        for i in range(len(products)):
+            if products[i][1][parameter] not in product_analysis[parameter]:
+                product_analysis[parameter].append(products[i][1][parameter])
+
+    print('\nАналитика по товарам:')
+    for key, value in product_analysis.items():
+        print(f'''{key}: {str(value)[1:-1].replace("'","")}''')
+
+    print('\nКонец. Нажмите Enter, чтобы выйти, или введите "+", чтобы повторить часть №6')
+    if not input():
         break
-    product = {}
-    for item in parameters:
-        value = input(f'{item}: ')
-        product[item] = int(value) if value.isdigit() else value
-    products.append(((len(products)+1), product))
-
-product_analysis = {}
-for parameter in parameters:
-    product_analysis.setdefault(parameter, [])
-    for i in range(len(products)):
-        if products[i][1][parameter] not in product_analysis[parameter]:
-            product_analysis[parameter].append(products[i][1][parameter])
-print('\nАналитика по товарам:')
-for key, value in product_analysis.items():
-    print(f'''{key.replace("'","")}: {str(value)[1:-1].replace("'","")}''')
-
-print('\nКонец. Нажмите любую клавишу, чтобы выйти ...')
-input()
+    print()
