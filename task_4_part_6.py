@@ -16,12 +16,14 @@ params = (int(x) for x in input('>>> ').split())
 
 def numgen(s, st):
     for i in count(s):
-        print(i)
+        yield i
         if i == st:
             break
 
 
-numgen(*params)
+for i in numgen(*params):
+    print(i)
+
 
 print('\n\nВведите элементы списка через пробел:')
 in_list = input('>>> ').split()
