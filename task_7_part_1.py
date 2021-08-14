@@ -26,8 +26,8 @@ class Matrix:
                 length = len(str(number))
                 if length > max_len:
                     max_len = length
-        # return ''.join('  '.join(('{:>' + str(max_len) + '}').format(number) for number in string) + '\n' for string in self.matrix)
-        form = '  '.join('{:' + str(max_len) + '}' for i in range(len(self.matrix[0]))) + '\n'
+        # return ''.join('  '.join('{:>{max}}'.format(number, max=str(max_len)) for number in string) + '\n' for string in self.matrix)
+        form = (('{:' + str(max_len) + '}  ') * len(self.matrix[0]))[:-2] + '\n'
         string = ''.join(form.format(*line) for line in self.matrix)
         return string
 
