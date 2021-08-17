@@ -8,22 +8,20 @@
 
 
 class Date:
-
-    def __init__(self, date):
-        self.date = date
+    date = '30-02-2020'
 
     @classmethod
-    def number(cls, the_date):
+    def number(cls):
         try:
-            return [int(x) for x in the_date.split('-')]
+            return [int(x) for x in cls.date.split('-')]
         except Exception as e:
-            return f'Ошибка: {e}'
+            return f'Error: {e}'
 
     @staticmethod
     def valid(the_date):
         numbers = [int(x) for x in the_date.split('-')]
         if numbers[0] not in range(1, 32):
-            return 'Invalid date, there are only 31 days in a month.'
+            return 'Invalid date, there are maximum 31 days in a month.'
         elif numbers[1] == 2 and numbers[0] not in range(1, 29) and numbers[2] % 4:
             return 'Invalid date, there are only 28 days in this month.'
         elif numbers[1] == 2 and numbers[0] not in range(1, 30) and not numbers[2] % 4:
@@ -35,6 +33,5 @@ class Date:
         return 'The date is correct.'
 
 
-date_1 = Date('30-02-2020')
-print(Date.number(date_1.date))
-print(Date.valid(date_1.date))
+print(Date.number())
+print(Date.valid('30-02-2020'))
